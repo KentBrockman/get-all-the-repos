@@ -36,4 +36,5 @@ if any(not f["pulled"] for f in remoteRepos.values()):
     print "You are missing the following repositories:"
     for k in remoteRepos:
         if remoteRepos[k]["pulled"] is False:
-            print k
+            print "Missing {0}, pulling it now...".format(k)
+            subprocess.call(["git clone {0}".format(remoteRepos[k]["remoteUrl"])], shell=True)
