@@ -10,8 +10,12 @@ def listdir_nohidden(path):
         if not f.startswith('.'):
             yield f
 
+# Design: the directory name is the organization to pull repositories from
+paths = os.getcwd().split(os.path.sep)
+orgname = paths[len(paths) - 1]
+
 print 'Get all repositories'
-data = json.load(urllib2.urlopen("https://api.github.com/orgs/openaginitiative/repos"))
+data = json.load(urllib2.urlopen("https://api.github.com/orgs/{0}/repos".format(orgname)))
 allRepos = {}
 
 for repo in data:
