@@ -6,9 +6,9 @@ import urllib2
 import subprocess
 
 def listdir_nohidden(path):
-        for f in os.listdir(path):
-                    if not f.startswith('.'):
-                                    yield f
+    for f in os.listdir(path):
+        if not f.startswith('.'):
+            yield f
 
 print 'Get all repositories'
 data = json.load(urllib2.urlopen("https://api.github.com/orgs/openaginitiative/repos"))
