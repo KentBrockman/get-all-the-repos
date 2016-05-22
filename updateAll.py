@@ -37,7 +37,6 @@ for localRepo in localRepos:
     if os.path.isdir(localRepo):
         print localRepo
 
-        command = "cd {0}".format(localRepo)
         os.chdir(localRepo)
         subprocess.call(["git pull"], shell=True)
         os.chdir("..")
