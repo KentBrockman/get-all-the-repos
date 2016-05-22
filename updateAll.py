@@ -10,6 +10,17 @@ def listdir_nohidden(path):
         if not f.startswith('.'):
             yield f
 
+'''
+TODOs:
+    - Accept flags to set the org 
+    - Check for both org and user repos instead of just org
+    - Error handling:
+        - if 404
+        - if no network connection
+    - Pretty text output
+    - Add tests 
+'''
+
 # Design: the directory name is the organization to pull repositories from
 paths = os.getcwd().split(os.path.sep)
 orgname = paths[len(paths) - 1]
