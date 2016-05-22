@@ -24,7 +24,7 @@ for item in items:
 
         command = "cd {0}".format(item)
         os.chdir(item)
-        subprocess.call(["git up"], shell=True)
+        subprocess.call(["git pull"], shell=True)
         os.chdir("..")
 
         if remoteRepos.has_key(item):
