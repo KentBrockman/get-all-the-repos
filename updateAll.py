@@ -12,29 +12,29 @@ def listdir_nohidden(path):
 
 print 'Get all repositories'
 data = json.load(urllib2.urlopen("https://api.github.com/orgs/openaginitiative/repos"))
-remoteRepos = {}
+allRepos = {}
 
 for repo in data:
-    remoteRepos[repo["name"]] = {"remoteUrl": repo["ssh_url"], "pulled": False}
+    allRepos[repo["name"]] = {"remoteUrl": repo["ssh_url"], "pulled": False}
 
-items = listdir_nohidden('.') 
-for item in items:
-    if os.path.isdir(item):
-        print item
+localRepos = listdir_nohidden('.') 
+for localRepo in localRepos:
+    if os.path.isdir(localRepo):
+        print localRepo
 
-        command = "cd {0}".format(item)
-        os.chdir(item)
+        command = "cd {0}".format(localRepo)
+        os.chdir(localRepo)
         subprocess.call(["git pull"], shell=True)
         os.chdir("..")
 
-        if remoteRepos.has_key(item):
-           remoteRepos[item]["pulled"] = True
+        if allRepos.has_key(localRepo):
+           allRepos[localRepo]["pulled"] = True
         else:
-            print "Repository doesn't exist on github: {0}".format(item)
+            print "Repository doesn't exist on github: {0}".format(localRepo)
 
-if any(not f["pulled"] for f in remoteRepos.values()):
+if any(not f["pulled"] for f in allRepos.values()):
     print "You are missing the following repositories:"
-    for k in remoteRepos:
-        if remoteRepos[k]["pulled"] is False:
+    for k in allRepos:
+        if allRepos[k]["pulled"] is False:
             print "Missing {0}, pulling it now...".format(k)
-            subprocess.call(["git clone {0}".format(remoteRepos[k]["remoteUrl"])], shell=True)
+            subprocess.call(["git clone {0}".format(allRepos[k]["remoteUrl"])], shell=True)
